@@ -120,8 +120,6 @@ def breadthFirstSearch(problem):
     queue.append((problem.getStartState(), []))
 
     while queue:
-        # size = len(queue)
-        # for i in range(0, size):
         curr_state, actions = queue.pop(0)
 
         if (problem.isGoalState(curr_state)):

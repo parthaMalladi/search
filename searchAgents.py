@@ -342,7 +342,6 @@ class CornersProblem(search.SearchProblem):
                 successors.append((nextState, action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
-
         return successors
 
     def getCostOfActions(self, actions):
