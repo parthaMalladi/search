@@ -179,7 +179,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     "*** YOUR CODE HERE ***"
     pq = util.PriorityQueue()
     visited = set()
-    pq.push((problem.getStartState(), []), searchAgents.manhattanHeuristic(problem.getStartState(), problem))
+    pq.push((problem.getStartState(), []), heuristic(problem.getStartState(), problem))
 
     while not pq.isEmpty():
         curr_state, actions = pq.pop()
@@ -195,7 +195,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
         for succ, dir, cost in successors:
             if succ not in visited:
-                pq.push((succ, actions + [dir]), searchAgents.manhattanHeuristic(succ, problem))
+                pq.push((succ, actions + [dir]), heuristic(succ, problem))
 
     return []
     util.raiseNotDefined()
