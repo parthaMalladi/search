@@ -101,6 +101,9 @@ def depthFirstSearch(problem):
         if (problem.isGoalState(curr_state)):
             return actions
         
+        if curr_state in visited:
+            continue
+        
         visited.add(curr_state)
 
         successors = problem.getSuccessors(curr_state)
@@ -150,7 +153,10 @@ def uniformCostSearch(problem):
 
         if problem.isGoalState(curr_state):
             return actions
-    
+
+        if curr_state in visited:
+            continue
+        
         visited.add(curr_state)
         successors = problem.getSuccessors(curr_state)
 
@@ -173,20 +179,23 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     "*** YOUR CODE HERE ***"
     pq = util.PriorityQueue()
     visited = set()
-    pq.push((problem.getStartState(), []), 0 + searchAgents.manhattanHeuristic(problem.getStartState(), problem))
+    pq.push((problem.getStartState(), []), searchAgents.manhattanHeuristic(problem.getStartState(), problem))
 
     while not pq.isEmpty():
         curr_state, actions = pq.pop()
 
         if problem.isGoalState(curr_state):
             return actions
-    
+
+        if curr_state in visited:
+            continue
+        
         visited.add(curr_state)
         successors = problem.getSuccessors(curr_state)
 
         for succ, dir, cost in successors:
             if succ not in visited:
-                pq.push((succ, actions + [dir]), cost + searchAgents.manhattanHeuristic(succ, problem))
+                pq.push((succ, actions + [dir]), searchAgents.manhattanHeuristic(succ, problem))
 
     return []
     util.raiseNotDefined()
