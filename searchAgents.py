@@ -482,6 +482,21 @@ def foodHeuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    fromFood = []
+    foodToFood = []
+    foodCoords = foodGrid.asList()
+    
+    for food in foodCoords:
+        fromFood.append(util.manhattanDistance(position, food))
+        for toFood in foodCoords:
+            foodToFood.append(util.manhattanDistance(food, toFood))
+    
+    if len(fromFood) > 0:
+        return min(fromFood) + max(foodToFood)
+    
+    if len(foodToFood) > 0:
+        return max(foodToFood)
+    
     return 0
 
 class ClosestDotSearchAgent(SearchAgent):
@@ -513,7 +528,7 @@ class ClosestDotSearchAgent(SearchAgent):
         problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return search.breadthFirstSearch(problem)
 
 class AnyFoodSearchProblem(PositionSearchProblem):
     """
@@ -549,7 +564,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         x,y = state
 
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+
 
 def mazeDistance(point1, point2, gameState):
     """
