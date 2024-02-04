@@ -377,17 +377,26 @@ def cornersHeuristic(state, problem):
     "*** YOUR CODE HERE ***"
     xy = state[0]
     cornersVisited = state[1]
-    heuristic = []
+    unvisitedCorners = []
+    heuristic = 0
     
     for i in range(0, len(cornersVisited)):
         if not cornersVisited[i]:
-            heuristic.append(util.manhattanDistance(xy, corners[i]))
+            unvisitedCorners.append(corners[i])
     
-    ans = 0
-    for h in heuristic:
-        ans = max(ans, h)  
+    while len(unvisitedCorners):
+        distanceCorner = []
+        for corner in unvisitedCorners:
+            distance = util.manhattanDistance(xy, corner)
+            distanceCorner.append((distance, corner))
         
-    return ans 
+        currDistance, currCorner = min(distanceCorner)
+        heuristic += currDistance
+        xy = currCorner
+        unvisitedCorners.remove(currCorner)
+    
+    return heuristic
+    
     # return 0 # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
