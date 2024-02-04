@@ -18,7 +18,6 @@ Pacman agents (in searchAgents.py).
 """
 
 import util
-import searchAgents
 
 class SearchProblem:
     """
@@ -113,7 +112,6 @@ def depthFirstSearch(problem):
                 stack.append((succ, actions + [dir]))
     
     return []
-    util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -139,17 +137,16 @@ def breadthFirstSearch(problem):
                 queue.append((succ, actions + [dir]))
 
     return []
-    util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
     pq = util.PriorityQueue()
     visited = set()
-    pq.push((problem.getStartState(), []), 0)
+    pq.push((problem.getStartState(), [], 0), 0)
 
     while not pq.isEmpty():
-        curr_state, actions = pq.pop()
+        curr_state, actions, curr_cost = pq.pop()
 
         if problem.isGoalState(curr_state):
             return actions
@@ -162,10 +159,10 @@ def uniformCostSearch(problem):
 
         for succ, dir, cost in successors:
             if succ not in visited:
-                pq.push((succ, actions + [dir]), cost)
+                newCost = curr_cost + cost
+                pq.push((succ, actions + [dir], newCost), newCost)
 
     return []
-    util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
     """
@@ -198,7 +195,6 @@ def aStarSearch(problem, heuristic=nullHeuristic):
                 pq.push((succ, actions + [dir]), heuristic(succ, problem))
 
     return []
-    util.raiseNotDefined()
 
 
 # Abbreviations
